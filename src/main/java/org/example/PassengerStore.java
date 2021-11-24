@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+
+import static java.lang.Integer.parseInt;
 
 public class PassengerStore {
 
@@ -24,6 +27,7 @@ public class PassengerStore {
             System.out.println(p.toString());
         }
     }
+
 
     /**
      * Read Passenger records from a text file and create and add Passenger
@@ -48,13 +52,33 @@ public class PassengerStore {
                 // construct a Passenger object and add it to the passenger list
                 passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
             }
-            sc.close();
+
 
         } catch (IOException e) {
             System.out.println("Exception thrown. " + e);
         }
     }
 
+
     // TODO - see functional spec for details of code to add
+    public void add(String name, String email, String phone,
+                    double latitude, double longitude) {
+        passengerList.add(new Passenger(name, email, phone, latitude, longitude));
+    }
+
+    public void add(int id, String name, String email, String phone,
+                    double latitude, double longitude) {
+        passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
+    }
+
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        PassengerStore that = (PassengerStore) o;
+//        return Objects.equals(passengerList, that.passengerList);
+//    }
+
 
 } // end class

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Passenger {
+public class Passenger implements Comparable<Passenger> {
     private int id;
     private String name;
     private String email;
@@ -21,7 +21,7 @@ public class Passenger {
                      double latitude, double longitude) {
 
         // some minimal validation
-        if (name == null )
+        if (name == null)
             throw new IllegalArgumentException("null arguments encountered");
 
         this.id = idGenerator.getNextId();
@@ -52,7 +52,10 @@ public class Passenger {
         return id;
     }
 
-    private void setId() {}; // prevents the id from being set (as it should only come from autogenerator)
+    private void setId() {
+    }
+
+    ; // prevents the id from being set (as it should only come from autogenerator)
 
     public String getName() {
         return name;
@@ -93,4 +96,35 @@ public class Passenger {
                 + email + ", phone=" + phone + ", location="
                 + location + "}";
     }
+
+//    @Override
+//    public boolean compareTo(Passenger other){
+//        boolean output = true;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Passenger passenger = (Passenger) o;
+        return Objects.equals(name, passenger.name) && Objects.equals(email, passenger.email);
+    }
+
+//        if(this.name.compareTo(other.name) == 0){
+//            return false;
+//        }
+//    }
+
+    @Override
+    public int compareTo(Passenger other) {
+        return this.name.compareTo(other.name);
+    }
+
+//    public void delete() {
+//        this.id = 0;
+//        this.name = null;
+//        this.email = null;
+//        this.phone = null;
+//        this.location = null;
+//    }
 }
