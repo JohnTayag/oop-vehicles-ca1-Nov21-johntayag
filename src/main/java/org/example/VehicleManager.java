@@ -18,6 +18,22 @@ public class VehicleManager {
             System.out.println(v.toString());
     }
 
+    public void getVehiclesbyId(int id){
+        for (Vehicle v : vehicleList){
+            if(v.getId() == id){
+                System.out.println("Details of vehicle with id "+id+":"+v);
+            }
+        }
+    }
+
+    public void getVehiclesbyMake(String make){
+        for (Vehicle v : vehicleList){
+            if(v.getMake().equals(make)){
+                System.out.println("Details of vehicle with make "+make+":"+v);
+            }
+        }
+    }
+
     public void loadVehiclesFromFile(String fileName) {
         try {
             Scanner sc = new Scanner(new File(fileName));
