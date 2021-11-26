@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static java.lang.Integer.parseInt;
 
-public class PassengerStore {
+
+public class PassengerStore{
 
     private final ArrayList<Passenger> passengerList;
 
@@ -23,16 +23,11 @@ public class PassengerStore {
     }
 
     public void displayAllPassengers() {
-        for (Passenger p : this.passengerList) {
+        for (Passenger p : passengerList) {
             System.out.println(p.toString());
         }
     }
 
-
-    /**
-     * Read Passenger records from a text file and create and add Passenger
-     * objects to the PassengerStore.
-     */
     private void loadPassengerDataFromFile(String filename) {
 
         try {
@@ -49,7 +44,6 @@ public class PassengerStore {
                 double latitude = sc.nextDouble();
                 double longitude = sc.nextDouble();
 
-                // construct a Passenger object and add it to the passenger list
                 passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
             }
 
@@ -59,8 +53,6 @@ public class PassengerStore {
         }
     }
 
-
-    // TODO - see functional spec for details of code to add
     public void add(String name, String email, String phone,
                     double latitude, double longitude) {
         passengerList.add(new Passenger(name, email, phone, latitude, longitude));
@@ -71,14 +63,14 @@ public class PassengerStore {
         passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
     }
 
+    public void findPassengerByName(String name){
+        for(Passenger p : passengerList){
+            if(p.getName().equals(name)){
+                System.out.println("Passengers with the name "+name+":"+p);
+            }
+        }
+    }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        PassengerStore that = (PassengerStore) o;
-//        return Objects.equals(passengerList, that.passengerList);
-//    }
 
 
-} // end class
+}

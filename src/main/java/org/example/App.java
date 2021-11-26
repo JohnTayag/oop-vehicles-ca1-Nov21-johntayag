@@ -4,100 +4,99 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Scanner;
 
-/**
- * This Vehicle Bookings Management Systems manages the booking of Vehicles
- * by Passengers.
- * <p>
- * This program reads from 3 text files:
- * "vehicles.txt", "passengers.txt", and "next-id-store.txt"
- * You should be able to see them in the project pane.
- * You will create "bookings.txt" at a later stage, to store booking records.
- * <p>
- * "next-id-store.txt" contains one number ("201"), which will be the
- * next auto-generated id to be used to when new vehicles, passengers, or
- * bookings are created.  The value in the file will be updated when new objects
- * are created - but not when objects are recreated from records in
- * the files - as they already have IDs.  Dont change it - it will be updated by
- * the IdGenerator class.
- */
+import static java.lang.Integer.parseInt;
 
 public class App {
     public static void main(String[] args) {
-//        System.out.println("\nWelcome to the VEHICLE BOOKINGS MANAGEMENT SYSTEM - CA1 for OOP\n");
-//
-//        // create PassengerStore and load it with passenger records from text file
-////        PassengerStore passengerStore = new PassengerStore("passengers.txt");
-////        System.out.println("List of all passengers:");
-////        passengerStore.add("Mary Jones", "jonesm@gmail.com", "087-753845", 23.5656, -17.0012);
-////        passengerStore.displayAllPassengers();
-//
-//        //ArrayList of passengers
-//        ArrayList<Passenger> ps1 = new ArrayList<Passenger>();
-//        Passenger p1 = new Passenger(573, "Jack Barry", "jbarry@gmail.com", "089-735621", 20.96, -19.18);
-//        Passenger p2 = new Passenger(174, "Jack Barry", "jbarry@gmail.com", "089-623414", 145.13, -59.31);
-//        ps1.add(p1);
-//        ps1.add(p2);
-//        ps1.add(new Passenger(647, "Ed Holmes", "dhl6@gmail.com", "089-424523", 62.62, -62.42));
-//        ps1.add(new Passenger(199, "Abe larkin", "abel@gmail.com", "088-426623", 36.62, -28.79));
-//
-//        //Sorting passengers
-//        Collections.sort(ps1);
-//        System.out.println("Sorted arraylist");
-//        for (Passenger p : ps1) {
-//            System.out.println(p);
-//        }
-//
-//        //Edit,delete print details of any passenger
-//        System.out.println("\nps1 get email of p1:" + p1.getEmail());
-//
-//        p1.setLocation(12.6, 21.99);
-//        System.out.println("after set location of ps1:" + p1);
-//
-////        System.out.println("is ps1 equals to ps2"+  p1.equals(p2));
-//
-//        //Deleting from arraylist
-//        delete(199, ps1);
-//        System.out.println("\nafter deleting id 199 from arraylist:");
-//        for (Passenger p : ps1) {
-//            System.out.println(p);
-//        }
 
-
-
-
-
-        //Vehicle
+        PassengerStore passengerStore = new PassengerStore("passengers.txt");
         VehicleManager vehicleManager = new VehicleManager("vehicles.txt");
-        System.out.println("List of all Vehicles:");
-        vehicleManager.displayAllVehicles();
-        vehicleManager.getVehiclesbyId(106);
-        vehicleManager.getVehiclesbyMake("Ford");
+//        PassengerStore.displayAllPassengers();
+//        PassengerStore.findPassengerByName("John Smith");
+
+        int option = 0;
+
+        while (option != 9) {
+            //Bugged: when we read in the last double, it leaves the /n in the input stream and thus
+            //the option reads this in
+            Scanner kb = new Scanner(System.in);
+            System.out.println("Press an option:");
+            System.out.println("1. Add a passenger");
+            System.out.println("2. Find Passenger By Name");
+            System.out.println("3. Display All Vehicles");
+            System.out.println("4. Get Vehicles By Id");
+            System.out.println("5. Get Vehicles By Type");
+            System.out.println("6. Get Vehicles By Make");
+            System.out.println("7. Get Vehicles By Seats");
+            System.out.println("8. Display List of All Passengers");
+            option = parseInt(kb.nextLine());
+
+            if (option == 1) {
+                System.out.print("enter passenger name:");
+                String name = kb.nextLine();
 
 
-//
-//        //Exit
-//        System.out.println("Program exiting... Goodbye");
+                System.out.print("enter passenger email:");
+                String email = kb.next();
 
+                System.out.print("enter passenger phonenumber:");
+                String phonenumber = kb.next();
 
-    }
+                System.out.print("enter passenger latitude:");
+                double latitude = kb.nextDouble();
 
-    public static void delete(int id, ArrayList<Passenger> ps1) {
-        for (int i = 0; i < ps1.size(); i++) {
-            if (ps1.get(i).getId() == id) {
-                ps1.remove(i);
+                System.out.print("enter passenger longtitude:");
+                double longtitude = kb.nextDouble();
+
+                for (int i = 0; i < passengerStore.getAllPassengers().size(); i++) {
+                    if (passengerStore.getAllPassengers().get(i).getName().equals(name) &&
+                            passengerStore.getAllPassengers().get(i).getEmail().equals(email)) {
+                        System.out.println("FAIL! Two passengers can't have the same name AND email!");
+                        break;
+                    } else {
+                        passengerStore.add(name, email, phonenumber, latitude, longtitude);
+                        break;
+                    }
+                }
+                passengerStore.displayAllPassengers();
+            }
+//            else if(option == 2){
+//                System.out.println("Enter name of passenger you want to find");
+//                String name = kb.next();
+//                PassengerStore.findPassengerByName(name);
+//            }
+            else if (option == 3) {
+                System.out.println("List of all Vehicles:");
+                vehicleManager.displayAllVehicles();
+            } else if (option == 4) {
+                System.out.println("Enter car id:");
+                int id = kb.nextInt();
+                vehicleManager.getVehiclesbyId(id);
+            } else if (option == 5) {
+                System.out.println("Enter car type:");
+                String type = kb.next();
+
+                vehicleManager.getVehiclesbyType(type);
+            } else if (option == 6) {
+                System.out.println("Enter car make:");
+                String make = kb.next();
+
+                vehicleManager.getVehiclesbyMake(make);
+            } else if (option == 7) {
+                System.out.println("Enter number of seats:");
+                int seats = kb.nextInt();
+
+                vehicleManager.getVehiclesbySeats(seats);
+            } else if (option == 8) {
+                System.out.println("List of all Passengers:");
+//                PassengerStore.displayAllPassengers();
             }
         }
+
+        System.out.println("Program exiting... Goodbye");
     }
 
-//    public static boolean add(int id, ArrayList<Passenger> ps1) {
-//        boolean output = true;
-//        for (int i = 0; i < ps1.size(); i++) {
-//            if (this == o) return true;
-//            if (o == null || getClass() != o.getClass()) return false;
-//            Passenger passenger = (Passenger) o;
-//            return Objects.equals(name, passenger.name) && Objects.equals(email, passenger.email);
-//        }
-//        return output;
-//    }
+
 }

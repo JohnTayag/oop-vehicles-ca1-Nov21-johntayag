@@ -9,14 +9,10 @@ public class Passenger implements Comparable<Passenger> {
     private String name;
     private String email;
     private String phone;
-    private LocationGPS location;  // Home location
+    private LocationGPS location;
 
     private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");  // get access to the id Generator
 
-    /**
-     * Constructor to be called when a new Passenger is created.
-     * It uses the IdGenerator to generate a passenger id.
-     */
     public Passenger(String name, String email, String phone,
                      double latitude, double longitude) {
 
@@ -31,9 +27,7 @@ public class Passenger implements Comparable<Passenger> {
         this.location = new LocationGPS(latitude, longitude);
     }
 
-    // Version of constructor called when the passenger id is known,
-    // as it was read from the "passengers.txt" file.
-    //
+
     public Passenger(int id, String name, String email, String phone,
                      double latitude, double longitude) {
 
@@ -97,13 +91,6 @@ public class Passenger implements Comparable<Passenger> {
                 + location + "}";
     }
 
-//    @Override
-//    public boolean compareTo(Passenger other){
-//        boolean output = true;
-
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,21 +99,9 @@ public class Passenger implements Comparable<Passenger> {
         return Objects.equals(name, passenger.name) && Objects.equals(email, passenger.email);
     }
 
-//        if(this.name.compareTo(other.name) == 0){
-//            return false;
-//        }
-//    }
-
     @Override
     public int compareTo(Passenger other) {
         return this.name.compareTo(other.name);
     }
 
-//    public void delete() {
-//        this.id = 0;
-//        this.name = null;
-//        this.email = null;
-//        this.phone = null;
-//        this.location = null;
-//    }
 }
