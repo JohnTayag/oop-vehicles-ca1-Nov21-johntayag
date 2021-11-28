@@ -2,7 +2,8 @@ package org.example;
 
 import java.time.LocalDate;
 
-public abstract class Vehicle {
+//use to be abstarct no comparable
+public class Vehicle implements Comparable<Vehicle>{
     private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");  // get access to the id Generator
 
     private int id;
@@ -138,6 +139,11 @@ public abstract class Vehicle {
                 + ", costPerMile=" + costPerMile + ", lastServicedDate="
                 + lastServicedDate + ", mileage=" + mileage + ", depotGPSLocation="
                 + depotGPSLocation + '}';
+    }
+
+    @Override
+    public int compareTo(Vehicle other) {
+        return this.getRegistration().compareTo(other.getRegistration());
     }
 
 }

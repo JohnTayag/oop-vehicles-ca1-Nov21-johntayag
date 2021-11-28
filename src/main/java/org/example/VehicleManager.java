@@ -3,9 +3,10 @@ package org.example;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
-public class VehicleManager {
+public class VehicleManager{
     private final ArrayList<Vehicle> vehicleList;  // for Car and Van objects
 
     public VehicleManager(String fileName) {
@@ -99,4 +100,8 @@ public class VehicleManager {
         }
     }
 
+    public void sortbyVehicleReg(){
+        ComparatorVehicleRegsitration comp = new ComparatorVehicleRegsitration();
+        Collections.sort(vehicleList,comp);
+    }
 }

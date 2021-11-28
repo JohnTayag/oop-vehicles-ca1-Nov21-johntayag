@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 
 
-public class PassengerStore{
+public class PassengerStore {
 
     private final ArrayList<Passenger> passengerList;
 
@@ -63,14 +62,15 @@ public class PassengerStore{
         passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
     }
 
-    public void findPassengerByName(String name){
-        for(Passenger p : passengerList){
-            if(p.getName().equals(name)){
-                System.out.println("Passengers with the name "+name+":"+p);
+    public void findPassengerByName(String name) {
+        for (Passenger p : passengerList) {
+            if (p.getName().equals(name)) {
+                System.out.println("Passengers with the name " + name + ":" + p);
+                System.out.println("Found passenger!");
+            } else{
+                System.out.println("No passenger matching the name \"" + name + "\"");
             }
+            break;
         }
     }
-
-
-
 }
