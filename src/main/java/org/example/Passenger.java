@@ -1,7 +1,5 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Passenger implements Comparable<Passenger> {
@@ -10,7 +8,6 @@ public class Passenger implements Comparable<Passenger> {
     private String email;
     private String phone;
     private LocationGPS location;
-
     private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");  // get access to the id Generator
 
     public Passenger(String name, String email, String phone,

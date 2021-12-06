@@ -1,33 +1,31 @@
 package org.example;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
-public class MenuStarter {
+public class MainApp {
     PassengerStore passengerStore;  // encapsulates access to list of Passengers
     VehicleManager vehicleManager;  // encapsulates access to list of Vehicles
     BookingManager bookingManager;  // deals with all bookings
 
     public static void main(String[] args) {
-        MenuStarter app = new MenuStarter();
+        MainApp app = new MainApp();
         app.start();
     }
 
     public void start() {
-        // create PassengerStore and load all passenger records from text file
         passengerStore = new PassengerStore("passengers.txt");
-
-        // create VehicleManager, and load all vehicles from text file
         vehicleManager = new VehicleManager("vehicles.txt");
+        bookingManager = new BookingManager("bookinks.txt",passengerStore,vehicleManager);
 
         try {
             displayMainMenu();        // User Interface - Menu
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         //   vehicleManager.displayAllVehicles();
 
@@ -79,6 +77,7 @@ public class MenuStarter {
                         break;
                     case BOOKINGS:
                         System.out.println("Bookings option chosen");
+                        displayBookingMenu();
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -97,7 +96,6 @@ public class MenuStarter {
 
     }
 
-    // Sub-Menu for Passenger operations
     private void displayPassengerMenu() {
         final String MENU_ITEMS = "\n*** PASSENGER MENU ***\n"
                 + "1. Show all Passengers\n"
@@ -147,17 +145,7 @@ public class MenuStarter {
                         System.out.print("enter passenger longtitude:");
                         double longtitude = kb.nextDouble();
 
-                        for (int i = 0; i < passengerStore.getAllPassengers().size(); i++) {
-                            if (passengerStore.getAllPassengers().get(i).getName().equals(input_name) &&
-                                    passengerStore.getAllPassengers().get(i).getEmail().equals(email)) {
-                                System.out.println("FAIL! Two passengers can't have the same name AND email!");
-                                break;
-                            } else {
-                                passengerStore.add(input_name, email, phonenumber, latitude, longtitude);
-                                break;
-                            }
-
-                        }
+                        passengerStore.add(input_name, email, phonenumber, latitude, longtitude);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -174,7 +162,6 @@ public class MenuStarter {
 
     }
 
-    // Sub-Menu for Vehicle operations
     private void displayVehicleMenu() {
         final String MENU_ITEMS = "\n*** PASSENGER MENU ***\n"
                 + "1. Show all Vehicles\n"
@@ -183,7 +170,7 @@ public class MenuStarter {
                 + "4. Find Vehicle by Id\n"
                 + "5. Find Vehicle by Make\n"
                 + "6. Exit\n"
-                + "Enter Option [1,4]";
+                + "Enter Option [1,6]";
 
         final int SHOW_ALL = 1;
         final int FIND_BY_TYPE = 2;
@@ -198,38 +185,138 @@ public class MenuStarter {
             System.out.println("\n" + MENU_ITEMS);
             try {
                 String usersInput = keyboard.nextLine();
-                option = Integer.parseInt(usersInput);
+                option = parseInt(usersInput);
                 switch (option) {
                     case SHOW_ALL:
                         System.out.println("Display ALL Vehicles");
-                        vehicleManager.displayAllVehicles();
+                        vehicleManager.DisplayAllVehicles();
                         break;
                     case FIND_BY_TYPE:
                         System.out.println("Find Vehicles by Type");
                         System.out.println("Enter Vehicle type: ");
                         String type = keyboard.nextLine();
                         //sort using registration number
-                        vehicleManager.sortbyVehicleReg();
-                        vehicleManager.getVehiclesbyType(type);
+                        vehicleManager.SortbyVehicleReg();
+                        vehicleManager.DisplayVehiclesbyType(type);
                         break;
                     case FIND_BY_SEATS:
                         System.out.println("Enter number of seats:");
                         int seats = keyboard.nextInt();
                         keyboard.nextLine();
                         //sort using registration number
-                        vehicleManager.sortbyVehicleReg();
-                        vehicleManager.getVehiclesbySeats(seats);
+                        vehicleManager.SortbyVehicleReg();
+                        vehicleManager.DisplayVehiclesbySeats(seats);
                         break;
                     case FIND_BY_ID:
                         System.out.println("Enter car id:");
                         int id = keyboard.nextInt();
                         keyboard.nextLine();
-                        vehicleManager.getVehiclesbyId(id);
+                        System.out.println("Vehicle with id " + id + ":" + vehicleManager.FindVehiclebyId(id));
                         break;
                     case FIND_BY_MAKE:
                         System.out.println("Enter car make:");
                         String make = keyboard.nextLine();
-                        vehicleManager.getVehiclesbyMake(make);
+                        vehicleManager.DisplayVehiclesbyMake(make);
+                        break;
+                    case EXIT:
+                        System.out.println("Exit Menu option chosen");
+                        break;
+                    default:
+                        System.out.print("Invalid option - please enter number in range");
+                        break;
+                }
+
+            } catch (InputMismatchException | NumberFormatException e) {
+                System.out.print("Invalid option - please enter number in range");
+            }
+        } while (option != EXIT);
+
+    }
+
+    private void displayBookingMenu() {
+        final String MENU_ITEMS = "\n*** BOOKING MENU ***\n"
+                + "1. Show all Bookings\n"
+                + "2. Add a Booking\n"
+                + "3. Edit a Booking\n"
+                + "4. Delete a Booking\n"
+                + "5. Find Booking by Id\n"
+                + "6. Exit\n"
+                + "Enter Option [1,6]";
+
+        final int SHOW_ALL_BOOKINGS = 1;
+        final int ADD_BOOKING = 2;
+//        final int EDIT_BOOKING = 3;
+//        final int DELETE_BOOKING = 4;
+        final int FIND_BOOKING_BY_ID = 5;
+
+        final int EXIT = 3;
+
+        Scanner keyb = new Scanner(System.in);
+        int option = 0;
+        do {
+            System.out.println("\n" + MENU_ITEMS);
+            try {
+                String usersInput = keyb.nextLine();
+                option = Integer.parseInt(usersInput);
+                switch (option) {
+
+                    case SHOW_ALL_BOOKINGS:
+                        System.out.println("Display ALL Bookings");
+                        bookingManager.DisplayAllBookings();
+                        break;
+                    case ADD_BOOKING:
+//                        Scanner kb = new Scanner(System.in);
+//
+//                        System.out.print("enter passenger id:");
+//                        int passenger_id = kb.nextInt();
+//
+//                        System.out.print("enter vehicle id:");
+//                        int vehicle_id = kb.nextInt();
+//
+//                        System.out.print("enter year");
+//                        int year = kb.nextInt();
+//
+//                        System.out.print("enter month");
+//                        int month = kb.nextInt();
+//                        System.out.print("enter day");
+//                        int day = kb.nextInt();
+//                        System.out.print("enter hour");
+//                        int hour = kb.nextInt();
+//                        System.out.print("enter minute");
+//                        int minute = kb.nextInt();
+//
+//                        System.out.print("enter startLocation latitude:");
+//                        double startLocation_Latitude = kb.nextDouble();
+//
+//                        System.out.print("enter startLocation longitude:");
+//                        double startLocation_Longitude = kb.nextDouble();
+//
+//                        System.out.print("enter endLocation latitude:");
+//                        double endLocation_Latitude = kb.nextDouble();
+//
+//                        System.out.print("enter endLocation longtitude:");
+//                        double endLocation_Longitude = kb.nextDouble();
+//
+//                        System.out.print("enter booking cost:");
+//                        double cost = kb.nextDouble();
+//
+//                        bookingManager.add(passenger_id, vehicle_id, year,month,day,
+//                                hour,minute,
+//                                startLocation_Latitude, startLocation_Longitude, endLocation_Latitude
+//                                , endLocation_Longitude, cost);
+                        bookingManager.add(101,105,2021,4,5,3,2,23.2,23.4,23.4,23.4,555);
+                        break;
+//                    case EDIT_BOOKING:
+//
+//                        break;
+//                    case DELETE_BOOKING:
+//
+//                        break;
+                    case FIND_BOOKING_BY_ID:
+                        System.out.println("Enter Booking id:");
+                        int id = keyb.nextInt();
+                        keyb.nextLine();
+                        System.out.println("Booking with id " + id + ":" + bookingManager.findBookingbyId(id));
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");

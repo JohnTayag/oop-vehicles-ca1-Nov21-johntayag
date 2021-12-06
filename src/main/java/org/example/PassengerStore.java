@@ -52,19 +52,53 @@ public class PassengerStore {
         }
     }
 
+//    public void validatePassengerInput(String name, String email, String phone,
+//                                       double latitude, double longitude){
+//        for (int i = 0; i < name.length(); i++) {
+//            if (name.charAt(i) >= 48 && name.charAt(i) <= 57) {
+//                System.out.println("FAIL! Inputed a Number for a String!");
+//            }
+//        }
+//    }
     public void add(String name, String email, String phone,
                     double latitude, double longitude) {
-        passengerList.add(new Passenger(name, email, phone, latitude, longitude));
+
+        for (int i = 0; i < passengerList.size(); i++) {
+            if (passengerList.get(i).getName().equalsIgnoreCase(name) &&
+                    passengerList.get(i).getEmail().equals(email)) {
+                System.out.println("FAIL! Two passengers can't have the same name AND email!");
+            }
+
+            else
+                {
+                passengerList.add(new Passenger(name, email, phone, latitude, longitude));
+                System.out.println("Added a Passenger!");
+            }
+            break;
+
+        }
+
     }
 
     public void add(int id, String name, String email, String phone,
                     double latitude, double longitude) {
-        passengerList.add(new Passenger(id, name, email, phone, latitude, longitude));
+        for (int i = 0; i < passengerList.size(); i++) {
+            if (passengerList.get(i).getName().equalsIgnoreCase(name) &&
+                    passengerList.get(i).getEmail().equals(email)) {
+                System.out.println("FAIL! Two passengers can't have the same name AND email!");
+            } else {
+                passengerList.add(new Passenger(id,name, email, phone, latitude, longitude));
+                System.out.println("Added a Passenger!");
+            }
+            break;
+
+        }
+
     }
 
     public void findPassengerByName(String name) {
         for (Passenger p : passengerList) {
-            if (p.getName().equals(name)) {
+            if (p.getName().equalsIgnoreCase(name)) {
                 System.out.println("Passengers with the name " + name + ":" + p);
                 System.out.println("Found passenger!");
             } else{
@@ -72,5 +106,14 @@ public class PassengerStore {
             }
             break;
         }
+    }
+
+    public Passenger findPassengerbyId(int id){
+        for(Passenger p: passengerList){
+            if(p.getId() == id){
+                return p;
+            }
+        }
+       return null;
     }
 }

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class VehicleManager{
-    private final ArrayList<Vehicle> vehicleList;  // for Car and Van objects
+    private final ArrayList<Vehicle> vehicleList;
 
     public VehicleManager(String fileName) {
         this.vehicleList = new ArrayList<>();
@@ -17,40 +17,38 @@ public class VehicleManager{
     public void loadVehiclesFromFile(String fileName) {
         try {
             Scanner sc = new Scanner(new File(fileName));
-//           Delimiter: set the delimiter to be a comma character ","
-//                    or a carriage-return '\r', or a newline '\n'
+
             sc.useDelimiter("[,\r\n]+");
 
             while (sc.hasNext()) {
                 int id = sc.nextInt();
-                String type = sc.next();  // vehicle type
+                String type = sc.next();
                 String make = sc.next();
                 String model = sc.next();
                 double milesPerKwH = sc.nextDouble();
                 String registration = sc.next();
                 double costPerMile = sc.nextDouble();
-                int year = sc.nextInt();   // last service date
+                int year = sc.nextInt();
                 int month = sc.nextInt();
                 int day = sc.nextInt();
                 int mileage = sc.nextInt();
-                double latitude = sc.nextDouble();  // Depot GPS location
+                double latitude = sc.nextDouble();
                 double longitude = sc.nextDouble();
-                int loadspace = sc.nextInt();
 
                 if (type.equalsIgnoreCase("Van") || type.equalsIgnoreCase("Truck")) {
-                    // construct a Van object and add it to the passenger list
+                    double loadspace = sc.nextDouble();
                     vehicleList.add(new Van(id, type, make, model, milesPerKwH,
                             registration, costPerMile,
                             year, month, day,
                             mileage, latitude, longitude,
                             loadspace));
                 } else if (type.equalsIgnoreCase("Car") || type.equalsIgnoreCase("4x4")) {
-                    // construct a Car object and add it to the passenger list
+                    int seats = sc.nextInt();
                     vehicleList.add(new Car(id, type, make, model, milesPerKwH,
                             registration, costPerMile,
                             year, month, day,
                             mileage, latitude, longitude,
-                            loadspace
+                            seats
                     ));
                 }
             }
@@ -61,20 +59,12 @@ public class VehicleManager{
         }
     }
 
-    public void displayAllVehicles() {
+    public void DisplayAllVehicles() {
         for (Vehicle v : vehicleList)
             System.out.println(v.toString());
     }
 
-    public void getVehiclesbyId(int id) {
-        for (Vehicle v : vehicleList) {
-            if (v.getId() == id) {
-                System.out.println("Details of vehicle with id " + id + ":" + v);
-            }
-        }
-    }
-
-    public void getVehiclesbyMake(String make) {
+    public void DisplayVehiclesbyMake(String make) {
         for (Vehicle v : vehicleList) {
             if (v.getMake().equals(make)) {
                 System.out.println("Details of vehicle with make " + make + ":" + v);
@@ -82,7 +72,7 @@ public class VehicleManager{
         }
     }
 
-    public void getVehiclesbyType(String type) {
+    public void DisplayVehiclesbyType(String type) {
         for (Vehicle v : vehicleList) {
             if (v.getType().equals(type)) {
                 System.out.println("Details of vehicle with type " + type + ":" + v);
@@ -90,7 +80,7 @@ public class VehicleManager{
         }
     }
 
-    public void getVehiclesbySeats(int seats) {
+    public void DisplayVehiclesbySeats(int seats) {
         for (Vehicle v : vehicleList) {
             if (v instanceof Car) {
                 if (((Car) v).getSeats() == seats) {
@@ -100,8 +90,17 @@ public class VehicleManager{
         }
     }
 
-    public void sortbyVehicleReg(){
+    public void SortbyVehicleReg(){
         ComparatorVehicleRegsitration comp = new ComparatorVehicleRegsitration();
         Collections.sort(vehicleList,comp);
+    }
+
+    public Vehicle FindVehiclebyId(int id){
+        for(Vehicle v: vehicleList){
+            if(v.getId() == id){
+                return v;
+            }
+        }
+        return null;
     }
 }
