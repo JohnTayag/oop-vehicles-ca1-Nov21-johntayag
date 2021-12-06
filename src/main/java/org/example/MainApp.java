@@ -101,13 +101,15 @@ public class MainApp {
                 + "1. Show all Passengers\n"
                 + "2. Find Passenger by Name\n"
                 + "3. Add a Passenger\n"
-                + "4. Exit\n"
-                + "Enter Option [1,4]";
+                + "4. Delete a Passenger\n"
+                + "5. Exit\n"
+                + "Enter Option [1,5]";
 
         final int SHOW_ALL = 1;
         final int FIND_BY_NAME = 2;
         final int ADD_PASSENGER = 3;
-        final int EXIT = 4;
+        final int DELETE_PASSENGER = 4;
+        final int EXIT = 5;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -119,13 +121,14 @@ public class MainApp {
                 switch (option) {
                     case SHOW_ALL:
                         System.out.println("Display ALL Passengers");
-                        passengerStore.displayAllPassengers();
+                        bookingManager.sortPassengersbyName();
+                        bookingManager.displayAllPassengers();
                         break;
                     case FIND_BY_NAME:
                         System.out.println("Find Passenger by Name");
                         System.out.println("Enter passenger name: ");
                         String name = keyboard.nextLine();
-                        passengerStore.findPassengerByName(name);
+                        bookingManager.findPassengerByName(name);
                         break;
                     case ADD_PASSENGER:
                         Scanner kb = new Scanner(System.in);
@@ -145,7 +148,14 @@ public class MainApp {
                         System.out.print("enter passenger longtitude:");
                         double longtitude = kb.nextDouble();
 
-                        passengerStore.add(input_name, email, phonenumber, latitude, longtitude);
+                        bookingManager.addPassenger(input_name, email, phonenumber, latitude, longtitude);
+                        break;
+                    case DELETE_PASSENGER:
+                        System.out.println("Select passenger name you want to delete:");
+                        String delete_name = keyboard.nextLine();
+                        System.out.println("Select passenger email you want to delete:");
+                        String delete_email = keyboard.nextLine();
+                        bookingManager.removePassenger(delete_name,delete_email);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");

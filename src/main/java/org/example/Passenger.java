@@ -8,12 +8,11 @@ public class Passenger implements Comparable<Passenger> {
     private String email;
     private String phone;
     private LocationGPS location;
-    private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");  // get access to the id Generator
+    private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");
 
     public Passenger(String name, String email, String phone,
                      double latitude, double longitude) {
 
-        // some minimal validation
         if (name == null)
             throw new IllegalArgumentException("null arguments encountered");
 
@@ -24,11 +23,9 @@ public class Passenger implements Comparable<Passenger> {
         this.location = new LocationGPS(latitude, longitude);
     }
 
-
     public Passenger(int id, String name, String email, String phone,
                      double latitude, double longitude) {
 
-        // some minimal validation
         if (name == null)
             throw new IllegalArgumentException("null arguments encountered");
 
@@ -43,10 +40,7 @@ public class Passenger implements Comparable<Passenger> {
         return id;
     }
 
-    private void setId() {
-    }
-
-    ; // prevents the id from being set (as it should only come from autogenerator)
+    private void setId() {}
 
     public String getName() {
         return name;
@@ -82,10 +76,10 @@ public class Passenger implements Comparable<Passenger> {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "{"
-                + "id=" + id + ", name=" + name + ", email="
-                + email + ", phone=" + phone + ", location="
-                + location + "}";
+        return this.getClass().getSimpleName()
+                + " Id=" + id + " Name=" + name + " Email="
+                + email + " Phone=" + phone + " Location="
+                + location;
     }
 
     @Override
@@ -94,6 +88,11 @@ public class Passenger implements Comparable<Passenger> {
         if (o == null || getClass() != o.getClass()) return false;
         Passenger passenger = (Passenger) o;
         return Objects.equals(name, passenger.name) && Objects.equals(email, passenger.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 
     @Override

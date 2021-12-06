@@ -110,4 +110,20 @@ public class BookingManager {
     public void displayAllPassengers(){
         passengerStore.displayAllPassengers();
     }
+
+    public void sortPassengersbyName(){
+        passengerStore.SortPassengersbyName();
+    }
+
+    public void findPassengerByName(String name){
+        passengerStore.findPassengerByName(name);
+    }
+
+    public void addPassenger(String input_name, String email, String phonenumber, double latitude, double longtitude){
+        passengerStore.addPassenger(input_name, email, phonenumber, latitude, longtitude);
+    }
+
+    public void removePassenger(String name, String email){
+        passengerStore.deletePassenger(name,email);
+    }
 }

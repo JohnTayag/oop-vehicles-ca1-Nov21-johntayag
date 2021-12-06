@@ -3,6 +3,7 @@ package org.example;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class PassengerStore {
 
-    private final ArrayList<Passenger> passengerList;
+    private final List<Passenger> passengerList;
 
     public PassengerStore(String fileName) {
         this.passengerList = new ArrayList<>();
@@ -60,7 +61,7 @@ public class PassengerStore {
 //            }
 //        }
 //    }
-    public void add(String name, String email, String phone,
+    public void addPassenger(String name, String email, String phone,
                     double latitude, double longitude) {
 
         for (int i = 0; i < passengerList.size(); i++) {
@@ -80,7 +81,7 @@ public class PassengerStore {
 
     }
 
-    public void add(int id, String name, String email, String phone,
+    public void addPassenger(int id, String name, String email, String phone,
                     double latitude, double longitude) {
         for (int i = 0; i < passengerList.size(); i++) {
             if (passengerList.get(i).getName().equalsIgnoreCase(name) &&
@@ -95,6 +96,19 @@ public class PassengerStore {
         }
 
     }
+
+    public void deletePassenger(String name, String email){
+        for(int j = 0; j < passengerList.size(); j++) {
+            Passenger obj = passengerList.get(j);
+            if(obj.getName().equalsIgnoreCase(name)
+            && obj.getEmail().equalsIgnoreCase(email)){
+                //found, delete.
+                passengerList.remove(j);
+                break;
+            }
+        }
+        }
+
 
     public void findPassengerByName(String name) {
         for (Passenger p : passengerList) {
@@ -115,5 +129,10 @@ public class PassengerStore {
             }
         }
        return null;
+    }
+
+    public void SortPassengersbyName(){
+        ComparatorPassengerName comp = new ComparatorPassengerName();
+        Collections.sort(passengerList,comp);
     }
 }
