@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -42,7 +43,7 @@ public class BookingManager {
                 double endLongitude = sc.nextDouble();
                 double cost = sc.nextDouble();
 
-                bookingList.add(new Booking(passengerId, vehicleId, year, month, day, hour, minute,
+                bookingList.add(new Booking(bookingId, passengerId, vehicleId, year, month, day, hour, minute,
                         startLatitude, startLongitude,
                         endLatitude, endLongitude, cost));
 
@@ -93,13 +94,48 @@ public class BookingManager {
         }
     }
 
-    public Booking findBookingbyId(int id) {
+    public Booking findBookingbyBookingId(int id) {
         for (Booking b : bookingList) {
             if (b.getBookingId() == id) {
                 return b;
             }
         }
         return null;
+    }
+
+    public void deletebyBookingId(int id) {
+        for (int j = 0; j < bookingList.size(); j++) {
+            Booking obj = bookingList.get(j);
+            if (obj.getBookingId()==id) {
+                bookingList.remove(j);
+            }
+        }
+    }
+
+    public void findBookingbyPassengerId(int id) {
+        System.out.println("Bookings with passenger id "+id+":");
+        for (Booking b : bookingList) {
+            if (b.getPassengerId() == id) {
+                System.out.println(b);
+            }
+        }
+    }
+
+//    public void FIND_BOOKING_BY_PASSENGER_NAME(String name){
+//        for (Booking b : bookingList){
+//            //loop through each booking
+//            //loop through each passengerlist
+//            //if passengerlist
+//         if(passengerStore.passengernameflag(name)){
+//
+//             System.out.println(b);
+//         }
+//        }
+//    }
+
+    public void sortbyBookingDateTime() {
+        ComparatorBookingDateTime comp = new ComparatorBookingDateTime();
+        Collections.sort(bookingList, comp);
     }
 
     //passengerStore methods

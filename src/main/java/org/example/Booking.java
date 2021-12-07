@@ -3,8 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Booking
-{
+public class Booking {
     private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");
 
     private int bookingId;
@@ -19,36 +18,28 @@ public class Booking
     //constructor without bookingId
     public Booking(int passengerId, int vehicleId, int year, int month, int day,
                    int hour, int minute, double startLatitude, double startLongitude,
-                   double endLatitude, double endLongitude,double cost) {
+                   double endLatitude, double endLongitude, double cost) {
 
         this.bookingId = idGenerator.getNextId();
         this.passengerId = passengerId;
         this.vehicleId = vehicleId;
-        this.bookingDateTime = LocalDateTime.of(year,month,day,hour,minute);
+        this.bookingDateTime = LocalDateTime.of(year, month, day, hour, minute);
         this.startLocation = new LocationGPS(startLatitude, startLongitude);
         this.endLocation = new LocationGPS(endLatitude, endLongitude);
         this.cost = cost;
     }
 
-    //constructor without bookingId
+    //constructor with bookingId
     public Booking(int bookingId, int passengerId, int vehicleId, int year, int month, int day,
                    int hour, int minute, double startLatitude, double startLongitude,
-                   double endLatitude, double endLongitude,double cost) {
+                   double endLatitude, double endLongitude, double cost) {
         this.bookingId = bookingId;
         this.passengerId = passengerId;
         this.vehicleId = vehicleId;
-        this.bookingDateTime = LocalDateTime.of(year,month,day,hour,minute);
+        this.bookingDateTime = LocalDateTime.of(year, month, day, hour, minute);
         this.startLocation = new LocationGPS(startLatitude, startLongitude);
         this.endLocation = new LocationGPS(endLatitude, endLongitude);
         this.cost = cost;
-    }
-
-    public IdGenerator getIdGenerator() {
-        return idGenerator;
-    }
-
-    public void setIdGenerator(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
     }
 
     public int getBookingId() {
@@ -56,7 +47,6 @@ public class Booking
     }
 
     public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
     }
 
     public int getPassengerId() {
@@ -110,8 +100,7 @@ public class Booking
     @Override
     public String toString() {
         return "Booking{" +
-                "idGenerator=" + idGenerator +
-                ", bookingId=" + bookingId +
+                "bookingId=" + bookingId +
                 ", passengerId=" + passengerId +
                 ", vehicleId=" + vehicleId +
                 ", bookingDateTime=" + bookingDateTime +

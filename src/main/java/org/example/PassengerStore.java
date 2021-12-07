@@ -92,17 +92,37 @@ public class PassengerStore {
         }
     }
 
-    public void findPassengerByName(String name) {
+//    public void findPassengerByName(String name) {
+//        for (Passenger p : passengerList) {
+//            if (p.getName().equalsIgnoreCase(name)) {
+//                System.out.println("Passengers with the name " + name + ":\n" + "Id                 Name                     Email                       Phone                            Location\n" + p);
+//                System.out.println("Found passenger!");
+//            } else {
+//                System.out.println("No passenger matching the name \"" + name + "\"");
+//            }
+//            break;
+//        }
+//    }
+
+    public Passenger findPassengerByName(String name) {
         for (Passenger p : passengerList) {
             if (p.getName().equalsIgnoreCase(name)) {
-                System.out.println("Passengers with the name " + name + ":\n" + "Id                 Name                     Email                       Phone                            Location\n" + p);
-                System.out.println("Found passenger!");
-            } else {
-                System.out.println("No passenger matching the name \"" + name + "\"");
+                return p;
             }
-            break;
         }
+        return null;
     }
+
+//    public boolean passengernameflag(String name) {
+//        boolean output = false;
+//        for (Passenger p : passengerList) {
+//            if (p.getName().equalsIgnoreCase(name)) {
+//               output = true;
+//            }
+//        }
+//        return output;
+//    }
+
 
     public Passenger findPassengerbyId(int id) {
         for (Passenger p : passengerList) {

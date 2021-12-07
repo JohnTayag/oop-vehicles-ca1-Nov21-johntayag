@@ -19,7 +19,11 @@ public class MainApp {
     public void start() {
         passengerStore = new PassengerStore("passengers.txt");
         vehicleManager = new VehicleManager("vehicles.txt");
-        bookingManager = new BookingManager("bookinks.txt",passengerStore,vehicleManager);
+        bookingManager = new BookingManager("bookings.txt", passengerStore, vehicleManager);
+        //testing
+//        bookingManager.sortbyBookingDateTime();
+//        bookingManager.FIND_BOOKING_BY_PASSENGER_NAME("john smith");
+
 
         try {
             displayMainMenu();        // User Interface - Menu
@@ -27,7 +31,7 @@ public class MainApp {
             e.printStackTrace();
         }
 
-        //   vehicleManager.displayAllVehicles();
+
 
 
         //   String registration = "172LH234106";
@@ -154,7 +158,8 @@ public class MainApp {
                         String delete_name = keyboard.nextLine();
                         System.out.println("Select passenger email you want to delete:");
                         String delete_email = keyboard.nextLine();
-                        bookingManager.removePassenger(delete_name,delete_email);
+
+                        bookingManager.removePassenger(delete_name, delete_email);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
@@ -204,7 +209,7 @@ public class MainApp {
                         System.out.println("Find Vehicles by Type");
                         System.out.println("Enter Vehicle type: ");
                         String type = keyboard.nextLine();
-                        //sort using registration number
+
                         bookingManager.sortbyVehicleReg();
                         bookingManager.displayVehiclesbyType(type);
                         break;
@@ -212,7 +217,7 @@ public class MainApp {
                         System.out.println("Enter number of seats:");
                         int seats = keyboard.nextInt();
                         keyboard.nextLine();
-                        //sort using registration number
+
                         bookingManager.sortbyVehicleReg();
                         bookingManager.displayVehiclesbySeats(seats);
                         break;
@@ -220,11 +225,13 @@ public class MainApp {
                         System.out.println("Enter car id:");
                         int id = keyboard.nextInt();
                         keyboard.nextLine();
+
                         bookingManager.findVehiclebyId(id);
                         break;
                     case FIND_BY_MAKE:
                         System.out.println("Enter car make:");
                         String make = keyboard.nextLine();
+
                         bookingManager.displayVehiclesbyMake(make);
                         break;
                     case EXIT:
@@ -246,19 +253,26 @@ public class MainApp {
         final String MENU_ITEMS = "\n*** BOOKING MENU ***\n"
                 + "1. Show all Bookings\n"
                 + "2. Add a Booking\n"
-                + "3. Edit a Booking\n"
-                + "4. Delete a Booking\n"
-                + "5. Find Booking by Id\n"
+
+
+                + "3. Find Booking by Booking Id\n"
+                + "4. Find Booking by Passenger Id\n"
+                + "5. Delete a Booking\n"
                 + "6. Exit\n"
                 + "Enter Option [1,6]";
 
         final int SHOW_ALL_BOOKINGS = 1;
         final int ADD_BOOKING = 2;
-//        final int EDIT_BOOKING = 3;
-//        final int DELETE_BOOKING = 4;
-        final int FIND_BOOKING_BY_ID = 5;
 
-        final int EXIT = 3;
+
+        final int FIND_BOOKING_BY_BOOKING_ID = 3;
+        final int FIND_BOOKING_BY_PASSENGER_ID = 4;
+        final int DELETE_BY_BOOKING_ID = 5;
+        //        final int DISPLAY_FUTURE_BOOKINGS = 4;
+        //        final int FIND_PASSENGER_BOOKING = 4;
+
+
+        final int EXIT = 6;
 
         Scanner keyb = new Scanner(System.in);
         int option = 0;
@@ -313,20 +327,31 @@ public class MainApp {
 //                                hour,minute,
 //                                startLocation_Latitude, startLocation_Longitude, endLocation_Latitude
 //                                , endLocation_Longitude, cost);
-                        bookingManager.add(101,105,2021,4,5,3,2,23.2,23.4,23.4,23.4,555);
+                        bookingManager.add(101, 105, 2021, 4, 5, 3, 2, 23.2, 23.4, 23.4, 23.4, 555);
                         break;
-//                    case EDIT_BOOKING:
-//
-//                        break;
-//                    case DELETE_BOOKING:
-//
-//                        break;
-                    case FIND_BOOKING_BY_ID:
+
+
+                    case FIND_BOOKING_BY_BOOKING_ID:
                         System.out.println("Enter Booking id:");
-                        int id = keyb.nextInt();
+                        int booking_id = keyb.nextInt();
                         keyb.nextLine();
-                        System.out.println("Booking with id " + id + ":" + bookingManager.findBookingbyId(id));
+
+                        System.out.println("Booking with id " + booking_id + ":\n" + bookingManager.findBookingbyBookingId(booking_id));
                         break;
+                    case FIND_BOOKING_BY_PASSENGER_ID:
+                        System.out.println("enter passenger id:");
+                        int passenger_id = keyb.nextInt();
+                        keyb.nextLine();
+
+                        bookingManager.findBookingbyPassengerId(passenger_id);
+                    case DELETE_BY_BOOKING_ID:
+                        System.out.println("enter booking id:");
+                        int input_id = keyb.nextInt();
+                        keyb.nextLine();
+
+                        bookingManager.deletebyBookingId(input_id);
+                        break;
+
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
                         break;
