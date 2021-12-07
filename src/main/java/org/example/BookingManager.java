@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class BookingManager {
@@ -53,20 +54,13 @@ public class BookingManager {
         }
     }
 
-    @Override
-    public String toString() {
-        return "BookingManager{" +
-                "bookingList=" + bookingList +
-                '}';
-    }
-
     public void add(int passengerId, int vehicleId, int year, int month, int day, int hour, int minute,
                     double startLatitude, double startLongitude,
                     double endLatitude, double endLongitude, double cost) {
 
 
         if (passengerStore.findPassengerbyId(passengerId) != null &&
-                vehicleManager.FindVehiclebyId(vehicleId) != null) {
+                vehicleManager.findVehiclebyId(vehicleId) != null) {
 
             bookingList.add(new Booking(passengerId, vehicleId, year, month, day, hour, minute,
                     startLatitude, startLongitude,
@@ -83,7 +77,7 @@ public class BookingManager {
 
 
         if (passengerStore.findPassengerbyId(passengerId) != null &&
-                vehicleManager.FindVehiclebyId(vehicleId) != null) {
+                vehicleManager.findVehiclebyId(vehicleId) != null) {
 
             bookingList.add(new Booking(bookingId, passengerId, vehicleId, year, month,
                     day, hour, minute,
@@ -92,6 +86,7 @@ public class BookingManager {
         }
     }
 
+    //BookingManager methods
     public void DisplayAllBookings(){
         for (Booking b : bookingList) {
             System.out.println(b.toString());
@@ -107,6 +102,7 @@ public class BookingManager {
         return null;
     }
 
+    //passengerStore methods
     public void displayAllPassengers(){
         passengerStore.displayAllPassengers();
     }
@@ -125,5 +121,37 @@ public class BookingManager {
 
     public void removePassenger(String name, String email){
         passengerStore.deletePassenger(name,email);
+    }
+
+    //vehicleStore methods
+    public void displayAllVehicles(){
+        vehicleManager.displayAllVehicles();
+    }
+
+    public void displayVehiclesbyType(String type){
+        vehicleManager.displayVehiclesbyType(type);
+    }
+
+    public void displayVehiclesbySeats(int seats){
+        vehicleManager.displayVehiclesbySeats(seats);
+    }
+
+    public void findVehiclebyId(int id){
+        System.out.println("Vehicle with id " + id + ":" + vehicleManager.findVehiclebyId(id));
+    }
+
+    public void displayVehiclesbyMake(String make){
+        vehicleManager.displayVehiclesbyMake(make);
+    }
+
+    public void sortbyVehicleReg(){
+        vehicleManager.sortbyVehicleReg();
+    }
+
+    @Override
+    public String toString() {
+        return "BookingManager{" +
+                "bookingList=" + bookingList +
+                '}';
     }
 }

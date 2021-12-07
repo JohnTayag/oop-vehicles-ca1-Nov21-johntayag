@@ -199,34 +199,34 @@ public class MainApp {
                 switch (option) {
                     case SHOW_ALL:
                         System.out.println("Display ALL Vehicles");
-                        vehicleManager.DisplayAllVehicles();
+                        bookingManager.displayAllVehicles();
                         break;
                     case FIND_BY_TYPE:
                         System.out.println("Find Vehicles by Type");
                         System.out.println("Enter Vehicle type: ");
                         String type = keyboard.nextLine();
                         //sort using registration number
-                        vehicleManager.SortbyVehicleReg();
-                        vehicleManager.DisplayVehiclesbyType(type);
+                        bookingManager.sortbyVehicleReg();
+                        bookingManager.displayVehiclesbyType(type);
                         break;
                     case FIND_BY_SEATS:
                         System.out.println("Enter number of seats:");
                         int seats = keyboard.nextInt();
                         keyboard.nextLine();
                         //sort using registration number
-                        vehicleManager.SortbyVehicleReg();
-                        vehicleManager.DisplayVehiclesbySeats(seats);
+                        bookingManager.sortbyVehicleReg();
+                        bookingManager.displayVehiclesbySeats(seats);
                         break;
                     case FIND_BY_ID:
                         System.out.println("Enter car id:");
                         int id = keyboard.nextInt();
                         keyboard.nextLine();
-                        System.out.println("Vehicle with id " + id + ":" + vehicleManager.FindVehiclebyId(id));
+                        bookingManager.findVehiclebyId(id);
                         break;
                     case FIND_BY_MAKE:
                         System.out.println("Enter car make:");
                         String make = keyboard.nextLine();
-                        vehicleManager.DisplayVehiclesbyMake(make);
+                        bookingManager.displayVehiclesbyMake(make);
                         break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");

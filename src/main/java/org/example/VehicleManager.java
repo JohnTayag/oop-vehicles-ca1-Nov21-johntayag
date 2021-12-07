@@ -59,12 +59,12 @@ public class VehicleManager{
         }
     }
 
-    public void DisplayAllVehicles() {
+    public void displayAllVehicles() {
         for (Vehicle v : vehicleList)
             System.out.println(v.toString());
     }
 
-    public void DisplayVehiclesbyMake(String make) {
+    public void displayVehiclesbyMake(String make) {
         for (Vehicle v : vehicleList) {
             if (v.getMake().equals(make)) {
                 System.out.println("Details of vehicle with make " + make + ":" + v);
@@ -72,7 +72,7 @@ public class VehicleManager{
         }
     }
 
-    public void DisplayVehiclesbyType(String type) {
+    public void displayVehiclesbyType(String type) {
         for (Vehicle v : vehicleList) {
             if (v.getType().equals(type)) {
                 System.out.println("Details of vehicle with type " + type + ":" + v);
@@ -80,7 +80,7 @@ public class VehicleManager{
         }
     }
 
-    public void DisplayVehiclesbySeats(int seats) {
+    public void displayVehiclesbySeats(int seats) {
         for (Vehicle v : vehicleList) {
             if (v instanceof Car) {
                 if (((Car) v).getSeats() == seats) {
@@ -90,12 +90,12 @@ public class VehicleManager{
         }
     }
 
-    public void SortbyVehicleReg(){
+    public void sortbyVehicleReg(){
         ComparatorVehicleRegsitration comp = new ComparatorVehicleRegsitration();
         Collections.sort(vehicleList,comp);
     }
 
-    public Vehicle FindVehiclebyId(int id){
+    public Vehicle findVehiclebyId(int id){
         for(Vehicle v: vehicleList){
             if(v.getId() == id){
                 return v;

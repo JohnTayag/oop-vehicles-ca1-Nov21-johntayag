@@ -102,7 +102,6 @@ public class PassengerStore {
             Passenger obj = passengerList.get(j);
             if(obj.getName().equalsIgnoreCase(name)
             && obj.getEmail().equalsIgnoreCase(email)){
-                //found, delete.
                 passengerList.remove(j);
                 break;
             }
