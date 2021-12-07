@@ -1,15 +1,15 @@
 package org.example;
 
-public class Van extends Vehicle
+public class Truck extends Vehicle
 {
     private double loadSpace;
 
     //constructor without id
-    public Van(String type, String make, String model, double milesPerKwH,
-               String registration, double costPerMile,
-               int year, int month, int day,
-               int mileage, double latitude, double longitude,
-               double loadSpace)
+    public Truck(String type, String make, String model, double milesPerKwH,
+                 String registration, double costPerMile,
+                 int year, int month, int day,
+                 int mileage, double latitude, double longitude,
+                 double loadSpace)
     {
 
         super(type,make,model,milesPerKwH,
@@ -21,11 +21,11 @@ public class Van extends Vehicle
     }
 
     //constructor with id
-    public Van(int id, String type, String make, String model, double milesPerKwH,
-               String registration, double costPerMile,
-               int year, int month, int day,
-               int mileage, double latitude, double longitude,
-               double loadSpace)
+    public Truck(int id, String type, String make, String model, double milesPerKwH,
+                 String registration, double costPerMile,
+                 int year, int month, int day,
+                 int mileage, double latitude, double longitude,
+                 double loadSpace)
     {
 
         super(id,type,make,model,milesPerKwH,
@@ -47,7 +47,7 @@ public class Van extends Vehicle
     @Override
     public String toString() {
         return
-//                "Van{" +
+//                "Truck{" +
                 "loadSpace=" + loadSpace +
                 "} " + super.toString();
     }

@@ -125,7 +125,9 @@ public class Vehicle implements Comparable<Vehicle>{
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "{" + "id:" + this.id + ", type:" + type + ", make=" + make + ", model=" + model
+        return
+//                this.getClass().getSimpleName() +
+                "{" + "id:" + this.id + ", type:" + type + ", make=" + make + ", model=" + model
                 + ", milesPerKm=" + milesPerKwH + ", registration=" + registration
                 + ", costPerMile=" + costPerMile + ", lastServicedDate="
                 + lastServicedDate + ", mileage=" + mileage + ", depotGPSLocation="

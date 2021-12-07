@@ -16,6 +16,7 @@ public class Booking
 
     private double cost;
 
+    //constructor without bookingId
     public Booking(int passengerId, int vehicleId, int year, int month, int day,
                    int hour, int minute, double startLatitude, double startLongitude,
                    double endLatitude, double endLongitude,double cost) {
@@ -29,6 +30,7 @@ public class Booking
         this.cost = cost;
     }
 
+    //constructor without bookingId
     public Booking(int bookingId, int passengerId, int vehicleId, int year, int month, int day,
                    int hour, int minute, double startLatitude, double startLongitude,
                    double endLatitude, double endLongitude,double cost) {

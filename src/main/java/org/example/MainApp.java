@@ -135,12 +135,11 @@ public class MainApp {
                         System.out.print("enter passenger name:");
                         String input_name = kb.nextLine();
 
-
                         System.out.print("enter passenger email:");
                         String email = kb.next();
 
-                        System.out.print("enter passenger phonenumber:");
-                        String phonenumber = kb.next();
+                        System.out.print("enter passenger phoneNumber:");
+                        String phoneNumber = kb.next();
 
                         System.out.print("enter passenger latitude:");
                         double latitude = kb.nextDouble();
@@ -148,7 +147,7 @@ public class MainApp {
                         System.out.print("enter passenger longtitude:");
                         double longtitude = kb.nextDouble();
 
-                        bookingManager.addPassenger(input_name, email, phonenumber, latitude, longtitude);
+                        bookingManager.addPassenger(input_name, email, phoneNumber, latitude, longtitude);
                         break;
                     case DELETE_PASSENGER:
                         System.out.println("Select passenger name you want to delete:");

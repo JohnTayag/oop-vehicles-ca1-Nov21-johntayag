@@ -40,7 +40,8 @@ public class Passenger implements Comparable<Passenger> {
         return id;
     }
 
-    private void setId() {}
+    private void setId() {
+    }
 
     public String getName() {
         return name;
@@ -76,10 +77,11 @@ public class Passenger implements Comparable<Passenger> {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName()
-                + " Id=" + id + " Name=" + name + " Email="
-                + email + " Phone=" + phone + " Location="
-                + location;
+//        return String.format("%11s", this.getClass().getSimpleName()) + String.format("%4s", "ID") + String.format("%8s", "Name")
+//                + String.format("%25s", "Email") + String.format("%12s", "Phone") + String.format("%50s", "Location") + "\n"
+//                + String.format("%15s", id);
+        return String.format(id+String.format("%24s", name)+String.format("%27s", email)+String.format("%23s", phone)
+        +String.format("%54s", location));
     }
 
     @Override
@@ -99,6 +101,5 @@ public class Passenger implements Comparable<Passenger> {
     public int compareTo(Passenger other) {
         return this.name.compareTo(other.name);
     }
-
 
 }
