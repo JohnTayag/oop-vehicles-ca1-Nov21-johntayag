@@ -11,7 +11,7 @@ public class BookingManager {
     private final ArrayList<Booking> bookingList;
     private PassengerStore passengerStore;
     private VehicleManager vehicleManager;
-
+    Email email = new Email();
     public BookingManager(String fileName, PassengerStore passengerStore, VehicleManager vehicleManager) {
 
         this.bookingList = new ArrayList<>();
@@ -64,6 +64,11 @@ public class BookingManager {
             bookingList.add(new Booking(passengerId, vehicleId, year, month, day, hour, minute,
                     startLatitude, startLongitude,
                     endLatitude, endLongitude, cost));
+
+            System.out.println(email.sendReminderBookingMessage(passengerId, vehicleId, year, month, day, hour, minute,
+                    startLatitude, startLongitude,
+                    endLatitude, endLongitude, cost));
+
         } else {
             System.out.println("Cannot find passenger or vehicle on record!");
         }
@@ -157,8 +162,9 @@ public class BookingManager {
         LocalDateTime now = LocalDateTime.now();
         boolean output = false;
         for (Booking b : bookingList) {
-            if (b.getBookingDateTime().equals(addBookingDateTime) || addBookingDateTime.isBefore(now)
-                    || b.getVehicleId() == vehicleId) {
+            if ((b.getBookingDateTime().equals(addBookingDateTime) && (b.getVehicleId() == vehicleId))
+                    || addBookingDateTime.isBefore(now))
+            {
                 output = true;
             }
         }
@@ -190,6 +196,8 @@ public class BookingManager {
        int p = passengerStore.getPassengerIdByName(name);
        return p;
     }
+
+
 
     //VEHICLEMANAGER METHODS
     public void displayAllVehicles() {

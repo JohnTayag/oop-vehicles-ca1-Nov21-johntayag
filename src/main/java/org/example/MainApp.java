@@ -23,6 +23,11 @@ public class MainApp {
 
         //TESTING
         // System.out.println(bookingManager.checkAvailability(107, 2022, 12, 25, 15, 30));
+//        bookingManager.add(101, 105, 2022,10,21,23,30,12.32,52.53,24.53,64.43,50.00);
+
+//        System.out.println(email.sendReminderBookingMessage(101, 105, 2022,10,21,
+//               23,30,12.32,52.53,
+//               24.53,64.43,50.45));
 
         try {
             displayMainMenu();
@@ -265,17 +270,16 @@ public class MainApp {
                 String usersInput = keyb.nextLine();
                 option = Integer.parseInt(usersInput);
                 switch (option) {
-
                     case SHOW_ALL_BOOKINGS:
                         System.out.println("Display ALL Bookings");
                         bookingManager.DisplayAllBookings();
                         break;
+
                     case ADD_BOOKING:
                         Scanner kb = new Scanner(System.in);
                         System.out.println("enter your name:");
                         String name = kb.nextLine();
                         int passengerId = bookingManager.getPassengerIdbyName(name);
-
                         if (passengerId == 0) {
                             System.out.println("error! User doesn't exist");
                             break;
@@ -283,14 +287,13 @@ public class MainApp {
 
                         System.out.println("enter the type of car you want to book:");
                         String car_type = kb.nextLine();
-
-                        if (
-                                !bookingManager.doesVehicleTypeExist(car_type)) {
+                        if (!bookingManager.doesVehicleTypeExist(car_type)) {
                             System.out.println("error Type of car doesn't exist or not in record");
                             break;
                         }
 
                         bookingManager.displayVehiclesbyType(car_type);
+
                         System.out.println("enter the id of vehicle you want to book from above:");
                         int vehicle_id = kb.nextInt();
                         System.out.print("enter year:");

@@ -123,5 +123,4 @@ public class Booking {
         return Objects.hash(passengerId, vehicleId);
     }
 
-
 }
