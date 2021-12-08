@@ -65,7 +65,7 @@ public class BookingManager {
                     startLatitude, startLongitude,
                     endLatitude, endLongitude, cost));
         } else {
-            System.out.println("Cannot find record!");
+            System.out.println("Cannot find passenger or vehicle on record!");
         }
     }
 
@@ -85,10 +85,18 @@ public class BookingManager {
         }
     }
 
-    //BookingManager methods
+    //BOOKINGMANAGER METHODS
     public void DisplayAllBookings() {
         for (Booking b : bookingList) {
             System.out.println(b.toString());
+        }
+    }
+
+    public void displayBookingsInFuture() {
+        LocalDateTime now = LocalDateTime.now();
+        for (Booking b : this.bookingList) {
+            if (now.isBefore(b.getBookingDateTime()))
+                System.out.println(b.toString());
         }
     }
 
@@ -123,80 +131,99 @@ public class BookingManager {
         return bookings;
     }
 
-//    public ArrayList<Booking>  findCurrentBookings(){
-//        ArrayList<Booking> bookings = new ArrayList<>();
-//        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-ddThh:mm");
-//        Date d1=null;
-//        String today=   getToday("yyyy-MMM-dd hh:mm");
-//        for (Booking b : bookingList) {
-//            if(d1.compareTo(d) <0){// not expired
-//                return false;
-//        }
-//        return bookings;
-//    }
-//    public static String getToday(String format){
-//        Date date = new Date();
-//        return new SimpleDateFormat(format).format(date);
-//    }
-    public ArrayList<Booking>  FindBookingByPassengerName(String name) {
-        int id = passengerStore.findPassengerIdByName(name);
+    public ArrayList<Booking> FindBookingsByPassengerName(String name) {
+        int id = getPassengerIdbyName(name);
         ArrayList<Booking> bookings = new ArrayList<>();
-        System.out.println("Bookings with passenger id " + id + ":");
+
         for (Booking b : bookingList) {
             if (b.getPassengerId() == id) {
                 bookings.add(b);
-
             }
         }
+
+        if (bookings.size() > 0) {
+            System.out.println("Bookings with passenger name " + name + ":");
+        } else {
+            System.out.println("Cannot find booking with that passenger name");
+        }
+
         ComparatorBookingDateTime comp = new ComparatorBookingDateTime();
         Collections.sort(bookings, comp);
         return bookings;
     }
 
-    //passengerStore methods
+    public boolean checkBoookingAvailability(int vehicleId, int year, int month, int day, int hour, int minute) {
+        LocalDateTime addBookingDateTime = LocalDateTime.of(year, month, day, hour, minute);
+        LocalDateTime now = LocalDateTime.now();
+        boolean output = false;
+        for (Booking b : bookingList) {
+            if (b.getBookingDateTime().equals(addBookingDateTime) || addBookingDateTime.isBefore(now)
+                    || b.getVehicleId() == vehicleId) {
+                output = true;
+            }
+        }
+        return output;
+    }
+
+    //PASSENGERSTORE METHODS
     public void displayAllPassengers() {
         passengerStore.displayAllPassengers();
     }
 
-    public void sortPassengersbyName() {
-        passengerStore.SortPassengersbyName();
-    }
-
     public void displayPassengerByName(String name) {
-        passengerStore.findPassengerByName(name);
+        Passenger p = passengerStore.displayPassengerByName(name);
+        if (p == null)
+            System.out.println("No Passenger with name " + name + " was found.");
+        else
+            System.out.println("Found Passenger: " + p);
     }
 
     public void addPassenger(String input_name, String email, String phonenumber, double latitude, double longtitude) {
         passengerStore.addPassenger(input_name, email, phonenumber, latitude, longtitude);
     }
 
-    public void removePassenger(String name, String email) {
+    public void deletePassenger(String name, String email) {
         passengerStore.deletePassenger(name, email);
     }
 
-    //vehicleStore methods
+    public int getPassengerIdbyName(String name){
+       int p = passengerStore.getPassengerIdByName(name);
+       return p;
+    }
+
+    //VEHICLEMANAGER METHODS
     public void displayAllVehicles() {
         vehicleManager.displayAllVehicles();
     }
 
     public void displayVehiclesbyType(String type) {
-        vehicleManager.displayVehiclesbyType(type);
+        for (Vehicle v1 : vehicleManager.findVehiclesbyType(type)) {
+            System.out.println(v1);
+        }
     }
 
-    public void displayVehiclesbySeats(int seats) {
-        vehicleManager.displayVehiclesbySeats(seats);
+    public boolean doesVehicleTypeExist(String type){
+        boolean output = true;
+       if(vehicleManager.findVehiclesbyType(type).size()<=0){
+           output = false;
+       }
+        return output;
+    }
+
+    public void findVehiclesbySeats(int seats) {
+        for (Vehicle v1 : vehicleManager.findVehiclesbySeats(seats)) {
+            System.out.println(v1);
+        }
     }
 
     public void displayVehiclebyId(int id) {
         System.out.println("Vehicle with id " + id + ":" + vehicleManager.findVehiclebyId(id));
     }
 
-    public void displayVehiclesbyMake(String make) {
-        vehicleManager.displayVehiclesbyMake(make);
-    }
-
-    public void sortbyVehicleReg() {
-        vehicleManager.sortbyVehicleReg();
+    public void findVehiclesbyMake(String make) {
+        for (Vehicle v1 : vehicleManager.findVehiclesbyMake(make)) {
+            System.out.println(v1);
+        }
     }
 
     @Override

@@ -64,35 +64,46 @@ public class VehicleManager {
             System.out.println(v.toString());
     }
 
-    public void displayVehiclesbyMake(String make) {
+    public ArrayList<Vehicle> findVehiclesbyMake(String make) {
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         for (Vehicle v : vehicleList) {
             if (v.getMake().equalsIgnoreCase(make)) {
-                System.out.println("Details of vehicle with make " + make + ":" + v);
+                vehicles.add(v);
             }
         }
+
+        sortbyVehicleReg(vehicles);
+        return vehicles;
     }
 
-    public void displayVehiclesbyType(String type) {
+    public ArrayList<Vehicle> findVehiclesbyType(String type) {
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         for (Vehicle v : vehicleList) {
             if (v.getType().equalsIgnoreCase(type)) {
-                System.out.println("Details of vehicle with type " + type + ":" + v);
+                vehicles.add(v);
             }
         }
+
+        sortbyVehicleReg(vehicles);
+        return vehicles;
     }
 
-    public void displayVehiclesbySeats(int seats) {
+    public ArrayList<Vehicle> findVehiclesbySeats(int seats) {
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         for (Vehicle v : vehicleList) {
-            if (v instanceof Fourxfour) {
-                if (((Fourxfour) v).getSeats() == seats) {
-                    System.out.println("Details of vehicles with " + seats + " seats:" + v);
+            if (v instanceof Car) {
+                if (((Car) v).getSeats() == seats) {
+                    vehicles.add(v);
                 }
             }
         }
+        sortbyVehicleReg(vehicles);
+        return vehicles;
     }
 
-    public void sortbyVehicleReg() {
+    public void sortbyVehicleReg(ArrayList<Vehicle> vehicles) {
         ComparatorVehicleRegsitration comp = new ComparatorVehicleRegsitration();
-        Collections.sort(vehicleList, comp);
+        Collections.sort(vehicles, comp);
     }
 
     public Vehicle findVehiclebyId(int id) {

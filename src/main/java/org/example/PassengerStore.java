@@ -6,14 +6,14 @@ import java.util.*;
 
 public class PassengerStore {
 
-    private final List<Passenger> passengerList;
+    private final ArrayList<Passenger> passengerList;
 
     public PassengerStore(String fileName) {
         this.passengerList = new ArrayList<>();
         loadPassengerDataFromFile(fileName);
     }
 
-    public List<Passenger> getAllPassengers() {
+    public ArrayList<Passenger> getAllPassengers() {
         return this.passengerList;
     }
 
@@ -87,24 +87,13 @@ public class PassengerStore {
     public void displayAllPassengers() {
         System.out.printf("Id                 Name                     Email                       Phone                            Location\n");
         System.out.println("=====================================================================================================================================");
+        SortPassengersbyName(passengerList);
         for (Passenger p : passengerList) {
             System.out.println(p.toString());
         }
     }
 
-//    public void findPassengerByName(String name) {
-//        for (Passenger p : passengerList) {
-//            if (p.getName().equalsIgnoreCase(name)) {
-//                System.out.println("Passengers with the name " + name + ":\n" + "Id                 Name                     Email                       Phone                            Location\n" + p);
-//                System.out.println("Found passenger!");
-//            } else {
-//                System.out.println("No passenger matching the name \"" + name + "\"");
-//            }
-//            break;
-//        }
-//    }
-
-    public Passenger findPassengerByName(String name) {
+    public Passenger displayPassengerByName(String name) {
         for (Passenger p : passengerList) {
             if (p.getName().equalsIgnoreCase(name)) {
                 return p;
@@ -113,7 +102,7 @@ public class PassengerStore {
         return null;
     }
 
-    public int findPassengerIdByName(String name) {
+    public int getPassengerIdByName(String name) {
        int id=0;
         for (Passenger p : passengerList) {
             if (p.getName().equalsIgnoreCase(name)) {
@@ -122,7 +111,6 @@ public class PassengerStore {
         }
       return id;
     }
-
 
     public Passenger findPassengerbyId(int id) {
         for (Passenger p : passengerList) {
@@ -133,8 +121,8 @@ public class PassengerStore {
         return null;
     }
 
-    public void SortPassengersbyName() {
+    public void SortPassengersbyName(ArrayList <Passenger> passengers) {
         ComparatorPassengerName comp = new ComparatorPassengerName();
-        Collections.sort(passengerList, comp);
+        Collections.sort(passengers,comp);
     }
 }
