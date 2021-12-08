@@ -2,12 +2,10 @@ package org.example;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookingManager {
     private final ArrayList<Booking> bookingList;
@@ -106,36 +104,53 @@ public class BookingManager {
     public void deletebyBookingId(int id) {
         for (int j = 0; j < bookingList.size(); j++) {
             Booking obj = bookingList.get(j);
-            if (obj.getBookingId()==id) {
+            if (obj.getBookingId() == id) {
                 bookingList.remove(j);
             }
         }
     }
 
-    public void findBookingbyPassengerId(int id) {
-        System.out.println("Bookings with passenger id "+id+":");
+    public ArrayList<Booking> findBookingByPassengerId(int id) {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        System.out.println("Bookings with passenger id " + id + ":");
         for (Booking b : bookingList) {
             if (b.getPassengerId() == id) {
-                System.out.println(b);
+                bookings.add(b);
             }
         }
+        ComparatorBookingDateTime comp = new ComparatorBookingDateTime();
+        Collections.sort(bookings, comp);
+        return bookings;
     }
 
-//    public void FIND_BOOKING_BY_PASSENGER_NAME(String name){
-//        for (Booking b : bookingList){
-//            //loop through each booking
-//            //loop through each passengerlist
-//            //if passengerlist
-//         if(passengerStore.passengernameflag(name)){
-//
-//             System.out.println(b);
-//         }
+//    public ArrayList<Booking>  findCurrentBookings(){
+//        ArrayList<Booking> bookings = new ArrayList<>();
+//        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-ddThh:mm");
+//        Date d1=null;
+//        String today=   getToday("yyyy-MMM-dd hh:mm");
+//        for (Booking b : bookingList) {
+//            if(d1.compareTo(d) <0){// not expired
+//                return false;
 //        }
+//        return bookings;
 //    }
+//    public static String getToday(String format){
+//        Date date = new Date();
+//        return new SimpleDateFormat(format).format(date);
+//    }
+    public ArrayList<Booking>  FindBookingByPassengerName(String name) {
+        int id = passengerStore.findPassengerIdByName(name);
+        ArrayList<Booking> bookings = new ArrayList<>();
+        System.out.println("Bookings with passenger id " + id + ":");
+        for (Booking b : bookingList) {
+            if (b.getPassengerId() == id) {
+                bookings.add(b);
 
-    public void sortbyBookingDateTime() {
+            }
+        }
         ComparatorBookingDateTime comp = new ComparatorBookingDateTime();
-        Collections.sort(bookingList, comp);
+        Collections.sort(bookings, comp);
+        return bookings;
     }
 
     //passengerStore methods
@@ -147,7 +162,7 @@ public class BookingManager {
         passengerStore.SortPassengersbyName();
     }
 
-    public void findPassengerByName(String name) {
+    public void displayPassengerByName(String name) {
         passengerStore.findPassengerByName(name);
     }
 
@@ -172,7 +187,7 @@ public class BookingManager {
         vehicleManager.displayVehiclesbySeats(seats);
     }
 
-    public void findVehiclebyId(int id) {
+    public void displayVehiclebyId(int id) {
         System.out.println("Vehicle with id " + id + ":" + vehicleManager.findVehiclebyId(id));
     }
 

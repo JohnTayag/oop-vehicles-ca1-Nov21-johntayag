@@ -113,15 +113,15 @@ public class PassengerStore {
         return null;
     }
 
-//    public boolean passengernameflag(String name) {
-//        boolean output = false;
-//        for (Passenger p : passengerList) {
-//            if (p.getName().equalsIgnoreCase(name)) {
-//               output = true;
-//            }
-//        }
-//        return output;
-//    }
+    public int findPassengerIdByName(String name) {
+       int id=0;
+        for (Passenger p : passengerList) {
+            if (p.getName().equalsIgnoreCase(name)) {
+               id = p.getId();
+            }
+        }
+      return id;
+    }
 
 
     public Passenger findPassengerbyId(int id) {

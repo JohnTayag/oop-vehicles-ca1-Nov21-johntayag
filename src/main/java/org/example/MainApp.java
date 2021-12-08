@@ -21,8 +21,11 @@ public class MainApp {
         vehicleManager = new VehicleManager("vehicles.txt");
         bookingManager = new BookingManager("bookings.txt", passengerStore, vehicleManager);
         //testing
-//        bookingManager.sortbyBookingDateTime();
-//        bookingManager.FIND_BOOKING_BY_PASSENGER_NAME("john smith");
+
+        System.out.println(bookingManager.FindBookingByPassengerName("john smith"));
+//bookingManager.findCurrentBookings();
+
+
 
 
         try {
@@ -132,7 +135,7 @@ public class MainApp {
                         System.out.println("Find Passenger by Name");
                         System.out.println("Enter passenger name: ");
                         String name = keyboard.nextLine();
-                        bookingManager.findPassengerByName(name);
+                        bookingManager.displayPassengerByName(name);
                         break;
                     case ADD_PASSENGER:
                         Scanner kb = new Scanner(System.in);
@@ -226,7 +229,8 @@ public class MainApp {
                         int id = keyboard.nextInt();
                         keyboard.nextLine();
 
-                        bookingManager.findVehiclebyId(id);
+                        bookingManager.displayVehiclebyId(id);
+
                         break;
                     case FIND_BY_MAKE:
                         System.out.println("Enter car make:");
@@ -343,7 +347,7 @@ public class MainApp {
                         int passenger_id = keyb.nextInt();
                         keyb.nextLine();
 
-                        bookingManager.findBookingbyPassengerId(passenger_id);
+                        System.out.println(bookingManager.findBookingByPassengerId(passenger_id));
                     case DELETE_BY_BOOKING_ID:
                         System.out.println("enter booking id:");
                         int input_id = keyb.nextInt();

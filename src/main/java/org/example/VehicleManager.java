@@ -37,14 +37,14 @@ public class VehicleManager {
 
                 if (type.equalsIgnoreCase("Van") || type.equalsIgnoreCase("Truck")) {
                     double loadspace = sc.nextDouble();
-                    vehicleList.add(new Truck(id, type, make, model, milesPerKwH,
+                    vehicleList.add(new Van(id, type, make, model, milesPerKwH,
                             registration, costPerMile,
                             year, month, day,
                             mileage, latitude, longitude,
                             loadspace));
                 } else if (type.equalsIgnoreCase("Car") || type.equalsIgnoreCase("Fourxfour")) {
                     int seats = sc.nextInt();
-                    vehicleList.add(new Fourxfour(id, type, make, model, milesPerKwH,
+                    vehicleList.add(new Car(id, type, make, model, milesPerKwH,
                             registration, costPerMile,
                             year, month, day,
                             mileage, latitude, longitude,
