@@ -6,6 +6,7 @@ public class Vehicle implements Comparable<Vehicle>{
     private IdGenerator idGenerator = IdGenerator.getInstance("next-id-store.txt");  // get access to the id Generator
 
     private int id;
+
     private String type;
     private String make;
     private String model;

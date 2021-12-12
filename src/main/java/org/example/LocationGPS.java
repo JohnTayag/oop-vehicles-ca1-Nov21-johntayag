@@ -13,7 +13,10 @@ public class LocationGPS
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    
+
+    public LocationGPS() {
+    }
+
     public double getLatitude()
     {
         return latitude;

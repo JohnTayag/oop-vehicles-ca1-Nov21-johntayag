@@ -3,6 +3,7 @@ package org.example;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -12,6 +13,7 @@ public class BookingManager {
     private PassengerStore passengerStore;
     private VehicleManager vehicleManager;
     Email email = new Email();
+
     public BookingManager(String fileName, PassengerStore passengerStore, VehicleManager vehicleManager) {
 
         this.bookingList = new ArrayList<>();
@@ -57,7 +59,6 @@ public class BookingManager {
                     double startLatitude, double startLongitude,
                     double endLatitude, double endLongitude, double cost) {
 
-
         if (passengerStore.findPassengerbyId(passengerId) != null &&
                 vehicleManager.findVehiclebyId(vehicleId) != null) {
 
@@ -65,6 +66,7 @@ public class BookingManager {
                     startLatitude, startLongitude,
                     endLatitude, endLongitude, cost));
 
+            //sends email to passenger when a booking is added
             System.out.println(email.sendReminderBookingMessage(passengerId, vehicleId, year, month, day, hour, minute,
                     startLatitude, startLongitude,
                     endLatitude, endLongitude, cost));
@@ -89,6 +91,80 @@ public class BookingManager {
                     endLatitude, endLongitude, cost));
         }
     }
+
+    //average length of bookings
+//    public double distance(LocationGPS StartLocation,LocationGPS EndLocation, char unit) {
+//        double lon1 = StartLocation.getLongitude();
+//        double lon2 = EndLocation.getLongitude();
+//        double lat1 = StartLocation.getLatitude();
+//        double lat2 = EndLocation.getLatitude();
+//
+//        double theta = lon1 - lon2;
+//        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+//        dist = Math.acos(dist);
+//        dist = rad2deg(dist);
+//        dist = dist * 60 * 1.1515;
+//        if (unit == 'K') {
+//            dist = dist * 1.609344;
+//        } else if (unit == 'N') {
+//            dist = dist * 0.8684;
+//        }
+//        return (dist);
+//    }
+//
+//    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+//    /*::  This function converts decimal degrees to radians             :*/
+//    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+//    private double deg2rad(double deg) {
+//        return (deg * Math.PI / 180.0);
+//    }
+//
+//    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+//    /*::  This function converts radians to decimal degrees             :*/
+//    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+//    private double rad2deg(double rad) {
+//        return (rad * 180.0 / Math.PI);
+//    }
+
+    //    public double calculatebookingdistance(){
+//        double distance =0;
+//        distance = (distance(vehicle.getDepotGPSLocation(),booking.getStartLocation(),'M')
+//                +distance(booking.getStartLocation(),booking.getEndLocation(),'M')
+//                +distance(booking.getEndLocation(),vehicle.getDepotGPSLocation(),'M'));
+//
+//
+//        return distance;
+//    }
+
+    //    public double calculatebookingcost(){
+//        double cost =0;
+//        if(vehicle.getType().equalsIgnoreCase("car")){
+//            cost= calculatebookingdistance()*2;
+//        }else if(vehicle.getType().equalsIgnoreCase("fourxfour"))
+//        {
+//            cost= calculatebookingdistance()*4;
+//        }else if(vehicle.getType().equalsIgnoreCase("truck")){
+//            cost= calculatebookingdistance()*10;
+//        }else{
+//            //van
+//            cost= calculatebookingdistance()*6;
+//        }
+//        return cost;
+//    }
+//
+//    public double averagelengthbookings(){
+//
+//        double length =0;
+//        int count=0;
+//        for(int i =0;i<bookingList.size();i++){
+//            length += calculatebookingcost()*calculatebookingdistance();
+//            count++;
+//        }
+//        System.out.println(length);
+//        System.out.println(count);
+//        length/=count;
+//        return length;
+//    }
 
     //BOOKINGMANAGER METHODS
     public void DisplayAllBookings() {
@@ -123,8 +199,8 @@ public class BookingManager {
         }
     }
 
-    public ArrayList<Booking> findBookingByPassengerId(int id) {
-        ArrayList<Booking> bookings = new ArrayList<>();
+    public List<Booking> findBookingByPassengerId(int id) {
+        List<Booking> bookings = new ArrayList<>();
         System.out.println("Bookings with passenger id " + id + ":");
         for (Booking b : bookingList) {
             if (b.getPassengerId() == id) {
@@ -136,9 +212,9 @@ public class BookingManager {
         return bookings;
     }
 
-    public ArrayList<Booking> FindBookingsByPassengerName(String name) {
+    public List<Booking> FindBookingsByPassengerName(String name) {
         int id = getPassengerIdbyName(name);
-        ArrayList<Booking> bookings = new ArrayList<>();
+        List<Booking> bookings = new ArrayList<>();
 
         for (Booking b : bookingList) {
             if (b.getPassengerId() == id) {
@@ -157,11 +233,15 @@ public class BookingManager {
         return bookings;
     }
 
-    public boolean checkBoookingAvailability(int vehicleId, int year, int month, int day, int hour, int minute) {
+    public boolean checkBoookingAvailability(int vehicleId, int year, int month, int day, int hour, int minute){
+
         LocalDateTime addBookingDateTime = LocalDateTime.of(year, month, day, hour, minute);
+
         LocalDateTime now = LocalDateTime.now();
         boolean output = false;
         for (Booking b : bookingList) {
+            //checks if two same vehicles are booked at same date time
+            //prevents booking in the past
             if ((b.getBookingDateTime().equals(addBookingDateTime) && (b.getVehicleId() == vehicleId))
                     || addBookingDateTime.isBefore(now))
             {
@@ -196,8 +276,6 @@ public class BookingManager {
        int p = passengerStore.getPassengerIdByName(name);
        return p;
     }
-
-
 
     //VEHICLEMANAGER METHODS
     public void displayAllVehicles() {
@@ -240,4 +318,6 @@ public class BookingManager {
                 "bookingList=" + bookingList +
                 '}';
     }
+
+
 }

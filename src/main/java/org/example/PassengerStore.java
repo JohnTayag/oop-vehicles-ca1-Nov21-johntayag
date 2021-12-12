@@ -45,9 +45,10 @@ public class PassengerStore {
 
         for (int i = 0; i < passengerList.size(); i++) {
             if (passengerList.get(i).getName().equalsIgnoreCase(name) &&
-                    passengerList.get(i).getEmail().equals(email)) {
+                    passengerList.get(i).getEmail().equalsIgnoreCase(email)) {
                 System.out.println("FAIL! Two passengers can't have the same name AND email!");
             } else {
+
                 passengerList.add(new Passenger(name, email, phone, latitude, longitude));
                 System.out.println("Added a Passenger!");
             }

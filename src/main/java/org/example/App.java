@@ -1,18 +1,18 @@
 package org.example;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.DateTimeException;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
-public class MainApp {
+public class App {
     PassengerStore passengerStore;  // encapsulates access to list of Passengers
     VehicleManager vehicleManager;  // encapsulates access to list of Vehicles
     BookingManager bookingManager;  // deals with all bookings
 
     public static void main(String[] args) {
-        MainApp app = new MainApp();
+        App app = new App();
         app.start();
     }
 
@@ -21,13 +21,8 @@ public class MainApp {
         vehicleManager = new VehicleManager("vehicles.txt");
         bookingManager = new BookingManager("bookings.txt", passengerStore, vehicleManager);
 
-        //TESTING
-        // System.out.println(bookingManager.checkAvailability(107, 2022, 12, 25, 15, 30));
-//        bookingManager.add(101, 105, 2022,10,21,23,30,12.32,52.53,24.53,64.43,50.00);
-
-//        System.out.println(email.sendReminderBookingMessage(101, 105, 2022,10,21,
-//               23,30,12.32,52.53,
-//               24.53,64.43,50.45));
+        //testing
+//                System.out.println(BookingManager.getBookingCost(12.32,52.53,24.53,64.43));
 
         try {
             displayMainMenu();
@@ -140,6 +135,7 @@ public class MainApp {
                         double latitude = kb.nextDouble();
                         System.out.print("enter passenger longtitude:");
                         double longtitude = kb.nextDouble();
+                        kb.nextLine();
                         bookingManager.addPassenger(input_name, email, phoneNumber, latitude, longtitude);
                         break;
 
@@ -285,16 +281,16 @@ public class MainApp {
                             break;
                         }
 
-                        System.out.println("enter the type of car you want to book:");
+                        System.out.println("enter the type of vehicle you want to book:");
                         String car_type = kb.nextLine();
                         if (!bookingManager.doesVehicleTypeExist(car_type)) {
-                            System.out.println("error Type of car doesn't exist or not in record");
+                            System.out.println("error! Type of vehicle doesn't exist");
                             break;
                         }
 
                         bookingManager.displayVehiclesbyType(car_type);
 
-                        System.out.println("enter the id of vehicle you want to book from above:");
+                        System.out.println("enter the id of the " + car_type + " you want to book from above:");
                         int vehicle_id = kb.nextInt();
                         System.out.print("enter year:");
                         int year = kb.nextInt();
@@ -320,9 +316,9 @@ public class MainApp {
                         if (bookingManager.checkBoookingAvailability(vehicle_id, year, month, day, hour, minute)) {
                             System.out.println("error! Vehicle is already booked, Date is expired or Vehicle doesn't exist");
                         } else {
-                            bookingManager.add(passengerId, vehicle_id, year, month, day,
-                                    hour, minute, startLocation_Latitude, startLocation_Longitude,
-                                    endLocation_Latitude, endLocation_Longitude, cost);
+                                bookingManager.add(passengerId, vehicle_id, year, month, day,
+                                        hour, minute, startLocation_Latitude, startLocation_Longitude,
+                                        endLocation_Latitude, endLocation_Longitude, cost);
                         }
                         break;
 
@@ -375,6 +371,8 @@ public class MainApp {
 
             } catch (InputMismatchException | NumberFormatException e) {
                 System.out.print("Invalid option - please enter number in range");
+            }catch(DateTimeException e){
+                System.out.println("Date is invalid!");
             }
         } while (option != EXIT);
 
